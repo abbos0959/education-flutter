@@ -1,9 +1,13 @@
 import 'package:education_app/core/res/colours.dart';
 import 'package:education_app/core/res/fonts.dart';
+import 'package:education_app/core/services/injection-container.dart';
 import 'package:education_app/core/services/router.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
+
   runApp(const MyApp());
 }
 

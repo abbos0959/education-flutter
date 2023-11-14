@@ -20,7 +20,7 @@ class OnBoardingLocalDataSrcImpl extends OnBoardingLocalDataSource {
   Future<void> cacheFirstTimer() async {
     try {
       await _prefs.setBool(kFirstTimerKey, false);
-    } catch(e) {
+    } catch (e) {
       throw CacheException(message: e.toString());
     }
   }
