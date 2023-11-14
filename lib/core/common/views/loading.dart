@@ -1,3 +1,4 @@
+import 'package:education_app/core/extension/context-extension.dart';
 import 'package:flutter/material.dart';
 
 class LoadingView extends StatelessWidget {
@@ -10,7 +11,7 @@ class LoadingView extends StatelessWidget {
       child: Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(
-            Theme.of(context).colorScheme.secondary,
+            context.theme.colorScheme.secondary,
           ),
         ),
       ),

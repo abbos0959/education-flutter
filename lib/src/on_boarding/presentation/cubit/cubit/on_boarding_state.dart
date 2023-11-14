@@ -16,7 +16,7 @@ class CachingFirstTimer extends OnBoardingState {
 }
 
 class CheckingIfUserIsFirstTimer extends OnBoardingState {
-  const CheckingIfUserIsFirstTimer(Object object);
+  const CheckingIfUserIsFirstTimer();
 }
 
 class UserCached extends OnBoardingState {
