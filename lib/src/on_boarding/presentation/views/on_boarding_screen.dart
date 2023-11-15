@@ -35,7 +35,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         image: MediaRes.onBoardingBackground,
         child: BlocConsumer<OnBoardingCubit, OnBoardingState>(
           listener: (context, state) {
-            if (state is OnBoardingStatus && !state.isFirstTimer) {
+            if (state is OnBoardingStatus && state.isFirstTimer) {
               Navigator.pushReplacementNamed(context, '/home');
             } else if (state is UserCached) {}
           },
@@ -50,18 +50,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   controller: pageController,
                   children: const [
                     OnBoardingBody(
-                      pageCount: PageContent.first(),
+                      pageContent: PageContent.first(),
                     ),
                     OnBoardingBody(
-                      pageCount: PageContent.second(),
+                      pageContent: PageContent.second(),
                     ),
                     OnBoardingBody(
-                      pageCount: PageContent.third(),
+                      pageContent: PageContent.third(),
                     ),
                   ],
                 ),
                 Align(
-                  alignment: const Alignment(0, 0.4),
+                  alignment: const Alignment(0, 0.09),
                   child: SmoothPageIndicator(
                     controller: pageController,
                     count: 3,
