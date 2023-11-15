@@ -1,11 +1,10 @@
-import 'package:education_app/core/common/views/loading.dart';
-import 'package:education_app/core/common/widgets/gradient-background.dart';
+import 'package:education_app/core/common/views/loading_view.dart';
+import 'package:education_app/core/common/widgets/gradient_background.dart';
 import 'package:education_app/core/res/colours.dart';
 import 'package:education_app/core/res/media_res.dart';
 import 'package:education_app/src/on_boarding/domain/entities/page_content.dart';
-import 'package:education_app/src/on_boarding/domain/usecases/cache_first_timer.dart';
-import 'package:education_app/src/on_boarding/presentation/cubit/cubit/on_boarding_cubit.dart';
-import 'package:education_app/src/on_boarding/presentation/widgets/on-boarding-body.dart';
+import 'package:education_app/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:education_app/src/on_boarding/presentation/widgets/on_boarding_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -21,27 +20,30 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final pageController = PageController();
+
   @override
   void initState() {
     super.initState();
-
     context.read<OnBoardingCubit>().checkIfUserIsFirstTimer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GradientBackground(
         image: MediaRes.onBoardingBackground,
         child: BlocConsumer<OnBoardingCubit, OnBoardingState>(
           listener: (context, state) {
-            if (state is OnBoardingStatus && state.isFirstTimer) {
+            if (state is OnBoardingStatus && !state.isFirstTimer) {
               Navigator.pushReplacementNamed(context, '/home');
-            } else if (state is UserCached) {}
+            } else if (state is UserCached) {
+              // TODO(User-Cached-Handler): Push to the appropriate screen
+            }
           },
           builder: (context, state) {
             if (state is CheckingIfUserIsFirstTimer ||
-                state is CacheFirstTimer) {
+                state is CachingFirstTimer) {
               return const LoadingView();
             }
             return Stack(
@@ -49,26 +51,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 PageView(
                   controller: pageController,
                   children: const [
-                    OnBoardingBody(
-                      pageContent: PageContent.first(),
-                    ),
-                    OnBoardingBody(
-                      pageContent: PageContent.second(),
-                    ),
-                    OnBoardingBody(
-                      pageContent: PageContent.third(),
-                    ),
+                    OnBoardingBody(pageContent: PageContent.first()),
+                    OnBoardingBody(pageContent: PageContent.second()),
+                    OnBoardingBody(pageContent: PageContent.third()),
                   ],
                 ),
                 Align(
-                  alignment: const Alignment(0, 0.09),
+                  alignment: const Alignment(0, .04),
                   child: SmoothPageIndicator(
                     controller: pageController,
                     count: 3,
                     onDotClicked: (index) {
                       pageController.animateToPage(
                         index,
-                        duration: const Duration(seconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
                     },
@@ -80,7 +76,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       dotColor: Colors.white,
                     ),
                   ),
-                )
+                ),
               ],
             );
           },

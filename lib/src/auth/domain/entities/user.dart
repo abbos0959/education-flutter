@@ -6,53 +6,45 @@ class LocalUser extends Equatable {
     required this.email,
     required this.points,
     required this.fullName,
-    required this.groipId,
-    required this.enrolledCourseId,
-    required this.following,
-    required this.followers,
-    required this.profilePic,
-    required this.bio,
+    this.groupIds = const [],
+    this.enrolledCourseIds = const [],
+    this.following = const [],
+    this.followers = const [],
+    this.profilePic,
+    this.bio,
   });
+
   const LocalUser.empty()
       : this(
           uid: '',
           email: '',
           points: 0,
           fullName: '',
-          groipId: const [],
-          enrolledCourseId: const [],
-          following: const [],
-          followers: const [],
           profilePic: '',
           bio: '',
+          groupIds: const [],
+          enrolledCourseIds: const [],
+          followers: const [],
+          following: const [],
         );
+
   final String uid;
   final String email;
-  final int points;
-  final String fullName;
-  final List<String> groipId;
-  final List<String> enrolledCourseId;
-  final List<String> following;
-  final List<String> followers;
   final String? profilePic;
   final String? bio;
+  final int points;
+  final String fullName;
+  final List<String> groupIds;
+  final List<String> enrolledCourseIds;
+  final List<String> following;
+  final List<String> followers;
 
   @override
-  List<Object?> get props => [
-        uid,
-        email,
-        // points,
-        // fullName,
-        // groipId,
-        // enrolledCourseId,
-        // following,
-        // followers,
-        // profilePic,
-        // bio,
-      ];
+  List<Object?> get props => [uid, email];
+
   @override
   String toString() {
-    return 'Localuser {uid :$uid,email :$email,points :'
-        '$points,fullName :$fullName,points:$points,bio:$bio}';
+    return 'LocalUser{uid: $uid, email: $email, bio: '
+        '$bio, points: $points, fullName: $fullName}';
   }
 }
